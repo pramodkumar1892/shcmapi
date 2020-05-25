@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\User;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class SigninController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,15 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $result = User::all();
-
-        if(count($result) > 0) {
-            $message['success'] = true;
-            $message['data'] = $result;
-        } else {
-            $message['success'] = false;
-        }
-        return response($message,200);
+        //
     }
 
     /**
@@ -33,8 +25,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $result = User::create($request->all());
-        if($result){
+        $email = $request->get('email');
+        $password = $request->get('password');
+        $result = User::where('email', $email)->where('password', $password)->get();
+
+        if(count($result) > 0){
             $message['success'] = true;
             $message['data'] = $result;
             return response($message,200);
@@ -52,14 +47,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $result = User::find($id);
-        if($result != null) {
-            $message['success'] = true;
-            $message['data'] = $result;
-        } else {
-            $message['success'] = false;
-        }
-        return response($message,200);
+        //
     }
 
     /**
@@ -71,19 +59,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $record = User::where('id', $id)->first();
-
-        //$record = User::find($id);
-        $record->fill($request->all());
-
-        if($record->save()){
-            $message['success'] = true;
-            $message['data'] = $record;
-        } else {
-            $message['success'] = false;
-        }
-
-        return response($message,200);
+        //
     }
 
     /**
@@ -94,13 +70,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $record = User::findOrFail($id);
-        if($record->delete()){
-            $message['success'] = true;
-            return response($message,200);
-        } else {
-            $message['success'] = false;
-            return response($message,404);
-        }
+        //
     }
 }

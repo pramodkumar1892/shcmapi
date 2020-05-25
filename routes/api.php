@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::ApiResources([
     'user' => 'UserController',
+    'signin' => 'SigninController',
 ]);
 
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
