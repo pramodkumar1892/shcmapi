@@ -14,7 +14,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        
+        $result = User::all();
+        $message['success'] = true;
+        $message['data'] = $result;
+        return response($message,200);
     }
 
     /**
@@ -25,7 +28,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $result = User::create($request->all());
+        if($result){
+            $message['success'] = true;
+            $message['data'] = $result;
+            return response($message,200);
+        } else {
+            $message['success'] = false;
+            return response($message,404);
+        }
     }
 
     /**
@@ -36,7 +47,10 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $record = User::find($id);
+        $message['success'] = true;
+        $message['data'] = $record;
+        return response($message,200);
     }
 
     /**
@@ -48,7 +62,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $record = User::findOrFail($id);
+        if($record->update($request->all())){
+            $message['success'] = true;
+            $message['data'] = $record;
+        } else {
+            $message['success'] = false;
+        }
+        return response($message,200);
     }
 
     /**
@@ -59,6 +80,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $record = User::findOrFail($id);
+        if($record->delete()){
+            $message['success'] = true;
+            return response($message,200);
+        } else {
+            $message['success'] = false;
+            return response($message,404);
+        }
     }
 }
