@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::ApiResources([
+    'tap' => 'TapController',
     'user' => 'UserController',
     'signin' => 'SigninController',
 ]);
