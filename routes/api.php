@@ -20,6 +20,8 @@ Route::ApiResources([
     'signin' => 'SigninController',
 ]);
 
+Route::get('requests', 'UserController@requests');
+
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});

@@ -103,4 +103,16 @@ class UserController extends Controller
             return response($message,404);
         }
     }
+
+    public function requests(Request $request)
+    {
+        $result = User::where('active', 0)->get();
+        if($result != null) {
+            $message['success'] = true;
+            $message['data'] = $result;
+        } else {
+            $message['success'] = false;
+        }
+        return response($message,200);
+    }
 }

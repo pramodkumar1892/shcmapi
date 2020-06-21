@@ -41,16 +41,19 @@ class TapController extends Controller
             $result->tap_parent_id = bin2hex(random_bytes(8));
             $result->tap_collection_id = bin2hex(random_bytes(8));
             $result->tap_in = date('Y-m-d H:i:s');
+            $result->reason = $request->reason;
         } elseif ($tap_collection_id == '') {
             $result = new Tap();
             $result->tap_parent_id = $tap_parent_id;
             $result->tap_collection_id = bin2hex(random_bytes(8));
             $result->tap_in = date('Y-m-d H:i:s');
+            $result->reason = $request->reason;
         } else {
             $result = Tap::where(['tap_parent_id' => $tap_parent_id, 'tap_collection_id' => $tap_collection_id])->first();
             $result->tap_parent_id = $tap_parent_id;
             $result->tap_collection_id = $tap_collection_id;
             $result->tap_out = date('Y-m-d H:i:s');
+            $result->reason = $request->reason;
             if($result->save()){
                 $message['success'] = true;
                 $message['data'] = $result;
@@ -112,6 +115,7 @@ class TapController extends Controller
             $collection_array[$value['tap_parent_id']][$value['tap_date']]['weekDay'] = $value['tap_day'];
 
             $collection_array[$value['tap_parent_id']][$value['tap_date']]['tapCollection'][$index2]['id'] = $value['tap_collection_id'];
+            $collection_array[$value['tap_parent_id']][$value['tap_date']]['tapCollection'][$index2]['reason'] = $value['reason'];
             $collection_array[$value['tap_parent_id']][$value['tap_date']]['tapCollection'][$index2]['tap_in'] = $value['tap_in'];
             $collection_array[$value['tap_parent_id']][$value['tap_date']]['tapCollection'][$index2]['tap_out'] = $value['tap_out'];
             $index2++;
